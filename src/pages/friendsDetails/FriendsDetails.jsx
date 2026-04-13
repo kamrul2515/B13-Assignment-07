@@ -84,8 +84,8 @@ const FriendsDetails = () => {
                     </div>
 
                     <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="font-medium text-[#244D3F]">Relationship Goal</h3>
+                        <div className="flex justify-between items-center mb-5">
+                            <h3 className="font-medium text-[20px] text-[#244D3F]">Relationship Goal</h3>
                             <button className="text-xs font-bold border px-3 py-1 rounded-md text-gray-500">Edit</button>
                         </div>
                         <p className="text-[#64748B] text-[18px]">Connect every <span className="font-bold text-[#1F2937]">30 days</span></p>
@@ -93,14 +93,14 @@ const FriendsDetails = () => {
 
                     {/* Quick Check-In Section */}
 <div className="bg-[#FFFFFF] p-8 rounded-3xl ">
-    <h3 className="text-lg font-bold text-[#1F2937] mb-6">Quick Check-In</h3>
+    <h3 className="text-[20px] font-medium text-[#1F2937] mb-6">Quick Check-In</h3>
     <div className="grid grid-cols-3 gap-6">
         {/* Call Button */}
         <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
             <div className="w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center text-2xl group-hover:bg-pink-100 transition-colors">
                 📞
             </div>
-            <span className="text-sm font-bold text-gray-700">Call</span>
+            <span className="text-[18px] text-[#1F2937]">Call</span>
         </button>
 
         {/* Text Button */}
@@ -108,7 +108,7 @@ const FriendsDetails = () => {
             <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center text-2xl group-hover:bg-purple-100 transition-colors">
                 💬
             </div>
-            <span className="text-sm font-bold text-gray-700">Text</span>
+            <span className="text-[18px] text-[#1F2937]">Text</span>
         </button>
 
         {/* Video Button */}
@@ -116,14 +116,14 @@ const FriendsDetails = () => {
             <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-gray-200 transition-colors">
                 📹
             </div>
-            <span className="text-sm font-bold text-gray-700">Video</span>
+            <span className="text-[18px] text-[#1F2937]">Video</span>
         </button>
     </div>
 </div>
 
                     <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-center mb-8">
-                            <h3 className="font-bold text-[#1F2937]">Recent Interactions</h3>
+                            <h3 className="font-medium text-[20px] text-[#244D3F]">Recent Interactions</h3>
                             <button className="text-xs font-bold bg-[#F8FAFC] px-4 py-2 rounded-lg flex items-center gap-2">
                                 📜 Full History
                             </button>
@@ -131,15 +131,15 @@ const FriendsDetails = () => {
                         
                         <div className="space-y-6">
                             {[1, 2, 3].map((item) => (
-                                <div key={item} className="flex justify-between items-start border-b border-gray-50 pb-6 last:border-0 last:pb-0">
+                                <div key={item} className="flex justify-between items-start border-b border-[#E9E9E9] pb-6 last:border-0 last:pb-0">
                                     <div className="flex gap-4">
                                         <div className="text-xl p-2 bg-gray-50 rounded-lg">💬</div>
                                         <div>
                                             <p className="font-bold text-sm text-[#1F2937]">Text</p>
-                                            <p className="text-xs text-gray-400">Asked for career advice</p>
+                                            <p className="text-base text-[#64748B]">Asked for career advice</p>
                                         </div>
                                     </div>
-                                    <p className="text-xs text-gray-400 font-medium tracking-tight">Jan 28, 2026</p>
+                                    <p className="text-xs text-[#64748B] font-medium tracking-tight">Jan 28, 2026</p>
                                 </div>
                             ))}
                         </div>
