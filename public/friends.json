@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "David Kim", "picture": "https://i.ibb.co.com/Lzg8q5fB/Ellipse-1.png", "days_since_contact": 62, "group_tag": "WORK", "status": "Almost Due" },
+  { "id": 2, "name": "Emma Wilson", "picture": "https://i.ibb.co.com/n8P3YwSv/Ellipse-1-1.png", "days_since_contact": 45, "group_tag": "FAMILY", "status": "Overdue" },
+  { "id": 3, "name": "Lisa Nakamura", "picture": "https://i.ibb.co.com/fzShkPcT/Ellipse-1-2.png", "days_since_contact": 12, "group_tag": "WORK", "status": "On-Track" },
+  { "id": 4, "name": "James Wright", "picture": "https://i.ibb.co.com/Mmx4yqX/Ellipse-1-3.png", "days_since_contact": 30, "group_tag": "HOBBY", "group_tag_2": "TRAVEL", "status": "Overdue" },
+  { "id": 5, "name": "Sarah Ahmed", "picture": "https://i.ibb.co.com/7xB1j0Ts/Ellipse-1-4.png", "days_since_contact": 62, "group_tag": "COLLEGE", "status": "Almost Due" },
+  { "id": 6, "name": "Michael Chen", "picture": "https://i.ibb.co.com/RphCdMdF/Ellipse-1-5.png", "days_since_contact": 5, "group_tag": "FRIEND", "status": "On-Track" },
+  { "id": 7, "name": "Sophia Garcia", "picture": "https://i.ibb.co.com/xq6cDBLg/Ellipse-1-6.png", "days_since_contact": 90, "group_tag": "WORK", "status": "Overdue" },
+  { "id": 8, "name": "Liam Brown", "picture": "https://i.ibb.co.com/Gf1grgxF/Ellipse-1-7.png", "days_since_contact": 62, "group_tag": "HOBBY", "status": "On-Track" },
+  { "id": 9, "name": "Olivia Scott", "picture": "https://i.ibb.co.com/Qj38gbgB/Ellipse-1-8.png", "days_since_contact": 25, "group_tag": "SCHOOL", "status": "Almost Due" },
+  { "id": 10, "name": "Noah Miller", "picture": "https://i.ibb.co.com/bfnsv7R/Ellipse-1-9.png", "days_since_contact": 62, "group_tag": "FAMILY", "status": "Overdue" }
+]
