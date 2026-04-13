@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { FaPhoneAlt, FaVideo } from 'react-icons/fa';
+import { FaBoxArchive, FaSignalMessenger } from 'react-icons/fa6';
+import { HiMiniBellSnooze } from 'react-icons/hi2';
+import { MdDeleteForever, MdOutlineHistory } from 'react-icons/md';
 import { useParams } from 'react-router';
 
 const FriendsDetails = () => {
@@ -32,7 +36,6 @@ const FriendsDetails = () => {
         />
         <h2 className="text-[20px] font-semibold text-[#1F2937] mb-2">{friend.name}</h2>
         
-        {/* Tags */}
         <div className="flex flex-col gap-2 items-center mt-1">
             <span className="bg-[#FEE2E2] text-[#EF4444] text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-wider">
                 {friend.status}
@@ -52,16 +55,16 @@ const FriendsDetails = () => {
 
 
     <div className="flex flex-col gap-3">
-        <button className="w-full py-4 bg-white flex items-center justify-center gap-3 text-base font-medium text-[#1F2937] border border-gray-100 rounded-2xl shadow-sm hover:bg-gray-50 transition-all">
-            <span className="text-lg">🔔</span> Snooze 2 Weeks
+        <button className="w-full py-4 bg-white flex items-center justify-center gap-2 text-base font-medium text-[#1F2937] border border-gray-100 rounded-2xl shadow-sm hover:bg-gray-50 transition-all">
+            <HiMiniBellSnooze /> Snooze 2 Weeks
         </button>
         
-        <button className="w-full py-4 bg-white flex items-center justify-center gap-3 text-base font-medium text-[#1F2937] border border-gray-100 rounded-2xl shadow-sm hover:bg-gray-50 transition-all">
-            <span className="text-lg">📁</span> Archive
+        <button className="w-full py-4 bg-white flex items-center justify-center gap-2 text-base font-medium text-[#1F2937] border border-gray-100 rounded-2xl shadow-sm hover:bg-gray-50 transition-all">
+            <FaBoxArchive /> Archive
         </button>
         
-        <button className="w-full py-4 bg-white flex items-center justify-center gap-3 text-base font-medium text-red-500 border border-gray-100 rounded-2xl shadow-sm hover:bg-red-50 transition-all">
-            <span className="text-lg">🗑️</span> Delete
+        <button className="w-full py-4 bg-white flex items-center justify-center gap-2 text-base font-medium text-red-500 border border-gray-100 rounded-2xl shadow-sm hover:bg-red-50 transition-all">
+            <MdDeleteForever /> Delete
         </button>
     </div>
 </div>
@@ -91,30 +94,27 @@ const FriendsDetails = () => {
                         <p className="text-[#64748B] text-[18px]">Connect every <span className="font-bold text-[#1F2937]">30 days</span></p>
                     </div>
 
-                    {/* Quick Check-In Section */}
+                
 <div className="bg-[#FFFFFF] p-8 rounded-3xl ">
     <h3 className="text-[20px] font-medium text-[#1F2937] mb-6">Quick Check-In</h3>
     <div className="grid grid-cols-3 gap-6">
-        {/* Call Button */}
         <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
             <div className="w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center text-2xl group-hover:bg-pink-100 transition-colors">
-                📞
+                <FaPhoneAlt />
             </div>
             <span className="text-[18px] text-[#1F2937]">Call</span>
         </button>
 
-        {/* Text Button */}
         <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
             <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center text-2xl group-hover:bg-purple-100 transition-colors">
-                💬
+                <FaSignalMessenger />
             </div>
             <span className="text-[18px] text-[#1F2937]">Text</span>
         </button>
 
-        {/* Video Button */}
         <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
             <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-gray-200 transition-colors">
-                📹
+                <FaVideo />
             </div>
             <span className="text-[18px] text-[#1F2937]">Video</span>
         </button>
@@ -125,24 +125,34 @@ const FriendsDetails = () => {
                         <div className="flex justify-between items-center mb-8">
                             <h3 className="font-medium text-[20px] text-[#244D3F]">Recent Interactions</h3>
                             <button className="text-xs font-bold bg-[#F8FAFC] px-4 py-2 rounded-lg flex items-center gap-2">
-                                📜 Full History
+                                <MdOutlineHistory /> Full History
                             </button>
                         </div>
                         
-                        <div className="space-y-6">
-                            {[1, 2, 3].map((item) => (
-                                <div key={item} className="flex justify-between items-start border-b border-[#E9E9E9] pb-6 last:border-0 last:pb-0">
-                                    <div className="flex gap-4">
-                                        <div className="text-xl p-2 bg-gray-50 rounded-lg">💬</div>
-                                        <div>
-                                            <p className="font-bold text-sm text-[#1F2937]">Text</p>
-                                            <p className="text-base text-[#64748B]">Asked for career advice</p>
-                                        </div>
-                                    </div>
-                                    <p className="text-xs text-[#64748B] font-medium tracking-tight">Jan 28, 2026</p>
-                                </div>
-                            ))}
-                        </div>
+                       <div className="space-y-6">
+    {[
+        { type: "Text", icon: <FaSignalMessenger />, note: "Asked for career advice", date: "Jan 28, 2026" },
+        { type: "Meetup", icon: <FaPhoneAlt />, note: "Industry conference meetup", date: "Jan 28, 2026" },
+        { type: "Video", icon: <FaVideo />, note: "Asked for career advice", date: "Jan 28, 2026" }
+    ].map((item, index) => (
+        <div key={index} className="flex justify-between items-center border-b border-gray-100 pb-5 last:border-0 last:pb-0">
+            <div className="flex items-center gap-4">
+                <div className="text-xl text-[#1F2937] w-10 h-10 flex items-center justify-center bg-gray-50 rounded-lg">
+                    {item.icon}
+                </div>
+
+                <div>
+                    <p className="font-bold text-base text-[#1F2937] leading-tight">{item.type}</p>
+                    <p className="text-sm text-[#64748B] mt-0.5">{item.note}</p>
+                </div>
+            </div>
+
+            <p className="text-sm text-[#64748B] font-medium">
+                {item.date}
+            </p>
+        </div>
+    ))}
+</div>
                     </div>
 
                 </div>
