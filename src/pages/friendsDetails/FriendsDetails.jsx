@@ -130,29 +130,29 @@ const FriendsDetails = () => {
                         </div>
                         
                        <div className="space-y-6">
-    {[
+        {[
         { type: "Text", icon: <FaSignalMessenger />, note: "Asked for career advice", date: "Jan 28, 2026" },
         { type: "Meetup", icon: <FaPhoneAlt />, note: "Industry conference meetup", date: "Jan 28, 2026" },
         { type: "Video", icon: <FaVideo />, note: "Asked for career advice", date: "Jan 28, 2026" }
-    ].map((item, index) => (
-        <div key={index} className="flex justify-between items-center border-b border-gray-100 pb-5 last:border-0 last:pb-0">
+             ].map((item, index) => (
+            <div key={index} className="flex justify-between items-center border-b border-gray-100 pb-5 last:border-0 last:pb-0">
             <div className="flex items-center gap-4">
                 <div className="text-xl text-[#1F2937] w-10 h-10 flex items-center justify-center bg-gray-50 rounded-lg">
                     {item.icon}
-                </div>
+                        </div>
 
-                <div>
+                    <div>
                     <p className="font-bold text-base text-[#1F2937] leading-tight">{item.type}</p>
                     <p className="text-sm text-[#64748B] mt-0.5">{item.note}</p>
-                </div>
-            </div>
+                    </div>
+                    </div>
 
-            <p className="text-sm text-[#64748B] font-medium">
-                {item.date}
-            </p>
-        </div>
-    ))}
-</div>
+                    <p className="text-sm text-[#64748B] font-medium">
+                    {item.date}
+                        </p>
+                    </div>
+                        ))}
+                    </div>
                     </div>
 
                 </div>
