@@ -35,7 +35,7 @@ const AllFriends = () => {
                         <div className="w-12 h-12 border-4 border-[#244D3F] border-t-transparent rounded-full animate-spin"></div>
                         <p className="mt-4 text-[#64748B] font-medium animate-pulse">Loading Friends...</p>
                     </div>
-                ) : (
+                    ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {friends.map(friend => (
                             <Link 
