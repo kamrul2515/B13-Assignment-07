@@ -89,10 +89,10 @@ const FriendsDetails = () => {
                     <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-center mb-5">
                             <h3 className="font-medium text-[20px] text-[#244D3F]">Relationship Goal</h3>
-                            <button className="text-xs font-bold border px-3 py-1 rounded-md text-gray-500">Edit</button>
-                        </div>
-                        <p className="text-[#64748B] text-[18px]">Connect every <span className="font-bold text-[#1F2937]">30 days</span></p>
+                         <button className="text-xs font-bold border px-3 py-1 rounded-md text-gray-500">Edit</button>
                     </div>
+                <p className="text-[#64748B] text-[18px]">Connect every <span className="font-bold text-[#1F2937]">30 days</span></p>
+        </div>
 
                 
 <div className="bg-[#FFFFFF] p-8 rounded-3xl ">

@@ -39,10 +39,10 @@ const Footer = () => {
                 </div>
 
 
-                <div className="border-t border-green-800/50 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-300 gap-4">
-                    <p>
+                    <div className="border-t border-green-800/50 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-300 gap-4">
+                        <p>
                         © {currentYear} KeenKeeper. All rights reserved.
-                    </p>
+                        </p>
                     
                     <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
                         <NavLink to="/privacy" className="hover:text-white transition-colors">Privacy Policy</NavLink>
