@@ -1,160 +1,198 @@
 import React, { useState, useEffect } from 'react';
-import { FaPhoneAlt, FaVideo } from 'react-icons/fa';
-import { FaBoxArchive, FaSignalMessenger } from 'react-icons/fa6';
+import { FaPhoneAlt, FaVideo, FaEnvelope } from 'react-icons/fa';
+import { FaBoxArchive } from 'react-icons/fa6';
 import { HiMiniBellSnooze } from 'react-icons/hi2';
-import { MdDeleteForever, MdOutlineHistory } from 'react-icons/md';
+import { MdDeleteForever } from 'react-icons/md';
 import { useParams } from 'react-router';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FriendsDetails = () => {
     const { id } = useParams();
     const [friend, setFriend] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); 
 
     useEffect(() => {
+        setIsLoading(true); 
         fetch("/friends.json")
             .then(res => res.json())
             .then(data => {
                 const foundFriend = data.find(f => f.id === parseInt(id));
-                setFriend(foundFriend);
+                setFriend(foundFriend || null);
+                setTimeout(() => setIsLoading(false), 800);
+            })
+            .catch(err => {
+                console.error("Failed to load friend:", err);
+                setIsLoading(false);
             });
     }, [id]);
 
-    if (!friend) return <div className="text-center py-20 font-['Geist']">Loading details...</div>;
+    const handleInteraction = (type) => {
+        if (!friend) return;
+
+        const saved = sessionStorage.getItem('user_interactions');
+        const prevData = saved ? JSON.parse(saved) : [];
+
+        const newEntry = {
+            id: Date.now(),
+            type: type,
+            name: friend.name,
+            date: new Date().toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            })
+        };
+
+        const updatedData = [newEntry, ...prevData];
+        sessionStorage.setItem('user_interactions', JSON.stringify(updatedData));
+
+        window.dispatchEvent(new Event('interactionsUpdated'));
+
+        toast.success(`${type} with ${friend.name} logged successfully!`, {
+            position: "top-center",
+            autoClose: 1500,
+        });
+    };
+    if (isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen bg-[#F8FAFC]">
+                <div className="w-12 h-12 border-4 border-[#244D3F] border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-4 text-[#64748B] font-medium animate-pulse">Loading Friend Details...</p>
+            </div>
+        );
+    }
+
+    if (!friend) {
+        return (
+            <div className="text-center py-20 font-medium text-gray-500">
+                Friend not found!
+            </div>
+        );
+    }
 
     return (
         <div className="bg-[#F8FAFC] min-h-screen pt-10 pb-20 px-4">
-            <div className="max-w-277.5 mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                
+            <ToastContainer />
 
+            <div className="w-full max-w-277.5 mx-auto">
+                <div className="overflow-hidden">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 lg:p-10">
 
-<div className="md:col-span-4 flex flex-col gap-4 h-fit">
+                        <div className="col-span-12 lg:col-span-4 w-full">
+                            <div className="bg-white flex flex-col items-center text-center rounded-3xl p-8 border border-gray-100">
+                                <img 
+                                    src={friend.picture} 
+                                    alt={friend.name} 
+                                    className="w-28 h-28 rounded-full object-cover mb-6 border-4 border-white shadow-sm" 
+                                />
 
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col items-center">
-        <img 
-            src={friend.picture} 
-            alt={friend.name} 
-            className="w-24 h-24 rounded-full object-cover mb-4 border-2 border-gray-100 p-1"
-        />
-        <h2 className="text-[20px] font-semibold text-[#1F2937] mb-2">{friend.name}</h2>
-        
-        <div className="flex flex-col gap-2 items-center mt-1">
-            <span className="bg-[#FEE2E2] text-[#EF4444] text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-wider">
-                {friend.status}
-            </span>
-            <span className="bg-[#DCFCE7] text-[#166534] text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-wider">
-                {friend.group_tag}
-            </span>
-        </div>
-        
-        <p className="text-gray-400 italic text-sm mt-6 text-center leading-relaxed">
-            "Former colleague, great mentor"
-        </p>
-        <p className="text-gray-400 text-xs mt-2 font-medium">
-            Preferred: <span className="text-gray-500">email</span>
-        </p>
-    </div>
+                                <h2 className="text-xl font-semibold text-[#1F2937] mb-2">{friend.name}</h2>
 
+                                <div className="flex flex-col gap-2 mb-2">
+                                    <span className="bg-red-500 text-white text-[12px] font-bold px-4 py-1 rounded-full tracking-widest mb-2">
+                                        Overdue
+                                    </span>
+                                    <span className="bg-emerald-100 text-[#244D3F] text-[12px] font-bold px-4 py-1 rounded-full tracking-widest mb-3">
+                                        {friend.group_tag || 'WORK'}
+                                    </span>
+                                </div>
 
-    <div className="flex flex-col gap-3">
-        <button className="w-full py-4 bg-white flex items-center justify-center gap-2 text-base font-medium text-[#1F2937] border border-gray-100 rounded-2xl shadow-sm hover:bg-gray-50 transition-all">
-            <HiMiniBellSnooze /> Snooze 2 Weeks
-        </button>
-        
-        <button className="w-full py-4 bg-white flex items-center justify-center gap-2 text-base font-medium text-[#1F2937] border border-gray-100 rounded-2xl shadow-sm hover:bg-gray-50 transition-all">
-            <FaBoxArchive /> Archive
-        </button>
-        
-        <button className="w-full py-4 bg-white flex items-center justify-center gap-2 text-base font-medium text-red-500 border border-gray-100 rounded-2xl shadow-sm hover:bg-red-50 transition-all">
-            <MdDeleteForever /> Delete
-        </button>
-    </div>
-</div>
+                                <p className="text-[#64748B] font-medium text-[16px]  leading-relaxed">
+                                    "Former colleague, great mentor"
+                                </p>
 
-                <div className="md:col-span-8 space-y-6">
+                                <div className="w-full pt-3">
+                                    <p className="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-2">
+                                        PREFERRED: EMAIL
+                                    </p>
+                                </div>
+                            </div>
 
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
-                            <h4 className="text-3xl font-semibold text-[#244D3F] mb-2">62</h4>
-                            <p className="text-[18px] text-[#64748B]">Days Since Contact</p>
+                            <div className="mt-8 space-y-3">
+                                <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-100 hover:bg-gray-50 rounded-2xl py-4 text-[#1F2937] font-medium transition-all active:scale-[0.985]">
+                                    <HiMiniBellSnooze className="text-[16px]l text-[#1F2937]" /> 
+                                    Snooze 2 Weeks
+                                </button>
+                                <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-100 hover:bg-gray-50 rounded-2xl py-4 text-[#1F2937] font-medium transition-all active:scale-[0.985]">
+                                    <FaBoxArchive className="text-[16px] text-[#1F2937]" /> 
+                                    Archive
+                                </button>
+                                <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-100 hover:bg-red-50 rounded-2xl py-4 text-red-500 font-medium transition-all active:scale-[0.985]">
+                                    <MdDeleteForever className="text-[16px]" /> 
+                                    Delete
+                                </button>
+                            </div>
                         </div>
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
-                            <h4 className="text-3xl font-semibold text-[#244D3F] mb-2">30</h4>
-                            <p className="text-[18px] text-[#64748B]">Goal (Days)</p>
-                        </div>
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
-                            <h4 className="text-2xl font-semibold text-[#244D3F] mb-2">Feb 27, 2026</h4>
-                            <p className="text-[18px] text-[#64748B]">Next Due</p>
-                        </div>
-                    </div>
 
-                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                        <div className="flex justify-between items-center mb-5">
-                            <h3 className="font-medium text-[20px] text-[#244D3F]">Relationship Goal</h3>
-                         <button className="text-xs font-bold border px-3 py-1 rounded-md text-gray-500">Edit</button>
-                    </div>
-                <p className="text-[#64748B] text-[18px]">Connect every <span className="font-bold text-[#1F2937]">30 days</span></p>
-        </div>
 
-                
-<div className="bg-[#FFFFFF] p-8 rounded-3xl ">
-    <h3 className="text-[20px] font-medium text-[#1F2937] mb-6">Quick Check-In</h3>
-    <div className="grid grid-cols-3 gap-6">
-        <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
-            <div className="w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center text-2xl group-hover:bg-pink-100 transition-colors">
+                        <div className="col-span-12 lg:col-span-8 space-y-6 w-full">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                <div className="bg-white border border-gray-100 rounded-2xl pt-8 text-center shadow-sm">
+                                    <div className="text-[30px] font-semibold text-[#244D3F]">62</div>
+                                    <div className="text-[18px] text-[#64748B] mt-2 mb-8 tracking-widest">Days Since Contact</div>
+                                </div>
+                                <div className="bg-white border border-gray-100 rounded-2xl pt-8 text-center shadow-sm">
+                                    <div className="text-[30px] font-semibold text-[#244D3F]">30</div>
+                                    <div className="text-[18px] text-[#64748B] mt-2 mb-8 tracking-widest">Goal (Days)</div>
+                                </div>
+                                <div className="bg-white border border-gray-100 rounded-2xl pt-8 text-center shadow-sm">
+                                    <div className="text-[30px] font-semibold text-[#244D3F]">Feb 27, 2026</div>
+                                    <div className="text-[18px] text-[#64748B] mt-2 mb-8 tracking-widest">Next Due</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <div className="font-medium text-[#244D3F] text-xl mt-3 mb-6">Relationship Goal</div>
+                                        <div className="text-[18px] mt-1 text-[#64748B] mb-3">
+                                            Connect every <span className="font-bold text-[#1F2937]">30 days</span>
+                                        </div>
+                                    </div>
+                                    <button className="text-[14px] text-[#1F2937] font-medium px-5 py-2 border bg-[#F8FAFC] border-gray-300 rounded-sm hover:bg-gray-100 transition-all">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+
+                           <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm">
+    <h3 className="text-xl font-medium text-[#244D3F] mb-8">Quick Check-In</h3>
+    
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <button 
+            onClick={() => handleInteraction('Call')}
+            className="flex flex-col items-center gap-3 p-8 bg-[#F8FAFC] border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-md transition-all group"
+        >
+            <div className="text-3xl text-gray-700 group-hover:text-pink-500 transition-all">
                 <FaPhoneAlt />
             </div>
-            <span className="text-[18px] text-[#1F2937]">Call</span>
+            <span className="font-medium text-[#1F2937] text-lg">Call</span>
         </button>
 
-        <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
-            <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center text-2xl group-hover:bg-purple-100 transition-colors">
-                <FaSignalMessenger />
+        <button 
+            onClick={() => handleInteraction('Text')}
+            className="flex flex-col items-center gap-3 p-8 bg-[#F8FAFC] border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-md transition-all group"
+        >
+            <div className="text-3xl text-gray-700 group-hover:text-purple-500 transition-all">
+                💬
             </div>
-            <span className="text-[18px] text-[#1F2937]">Text</span>
+            <span className="font-medium text-[#1F2937] text-lg">Text</span>
         </button>
 
-        <button className="bg-[#E9E9E9] p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50 flex flex-col items-center gap-3 hover:scale-105 transition-transform group">
-            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl group-hover:bg-gray-200 transition-colors">
+        <button 
+            onClick={() => handleInteraction('Video')}
+            className="flex flex-col items-center gap-3 p-8 bg-[#F8FAFC] border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-md transition-all group"
+        >
+            <div className="text-3xl text-gray-700 group-hover:text-blue-500 transition-all">
                 <FaVideo />
             </div>
-            <span className="text-[18px] text-[#1F2937]">Video</span>
+            <span className="font-medium text-[#1F2937] text-lg">Video</span>
         </button>
     </div>
 </div>
-
-                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                        <div className="flex justify-between items-center mb-8">
-                            <h3 className="font-medium text-[20px] text-[#244D3F]">Recent Interactions</h3>
-                            <button className="text-xs font-bold bg-[#F8FAFC] px-4 py-2 rounded-lg flex items-center gap-2">
-                                <MdOutlineHistory /> Full History
-                            </button>
                         </div>
-                        
-                       <div className="space-y-6">
-        {[
-        { type: "Text", icon: <FaSignalMessenger />, note: "Asked for career advice", date: "Jan 28, 2026" },
-        { type: "Meetup", icon: <FaPhoneAlt />, note: "Industry conference meetup", date: "Jan 28, 2026" },
-        { type: "Video", icon: <FaVideo />, note: "Asked for career advice", date: "Jan 28, 2026" }
-             ].map((item, index) => (
-            <div key={index} className="flex justify-between items-center border-b border-gray-100 pb-5 last:border-0 last:pb-0">
-            <div className="flex items-center gap-4">
-                <div className="text-xl text-[#1F2937] w-10 h-10 flex items-center justify-center bg-gray-50 rounded-lg">
-                    {item.icon}
-                        </div>
-
-                    <div>
-                    <p className="font-bold text-base text-[#1F2937] leading-tight">{item.type}</p>
-                    <p className="text-sm text-[#64748B] mt-0.5">{item.note}</p>
                     </div>
-                    </div>
-
-                    <p className="text-sm text-[#64748B] font-medium">
-                    {item.date}
-                        </p>
-                    </div>
-                        ))}
-                    </div>
-                    </div>
-
                 </div>
             </div>
         </div>
